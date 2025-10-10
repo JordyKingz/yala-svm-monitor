@@ -1,0 +1,58 @@
+{
+  "performance": {
+    "max_concurrent_slots": 500,
+    "skip_empty_slots": true,
+    "batch_size": 1000,
+    "rpc_timeout_ms": 10000,
+    "enable_pre_filtering": true,
+    "yu_focused_mode": true
+  },
+  "yu_focused_filters": {
+    "comment": "ONLY monitor slots containing YU token activity - ignore everything else",
+    "primary_token": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+    "primary_token_name": "YU Token (YUYA)",
+    "min_yu_amount": 100.0,
+    "skip_after_no_yu_slots": 100,
+    
+    "programs_when_yu_present": {
+      "comment": "Only care about these programs when YU token is involved",
+      "programs": [
+        "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8",
+        "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+        "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB",
+        "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+        "6doghB248px58JSSwG4qejQ46kFMW4AMj7vzJnWZHNZn",
+        "3fCoNdCEoEcERakCPM17NjLE9AocA86LMwRRWDpzjLVh"
+      ],
+      "program_names": {
+        "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8": "Raydium (for YU swaps)",
+        "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4": "Jupiter V6 (for YU swaps)",
+        "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB": "Jupiter V4 (for YU swaps)",
+        "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc": "Orca (for YU swaps)",
+        "6doghB248px58JSSwG4qejQ46kFMW4AMj7vzJnWZHNZn": "LayerZero (for YU bridges) [OLD]",
+        "3fCoNdCEoEcERakCPM17NjLE9AocA86LMwRRWDpzjLVh": "LayerZero (for YU bridges) [NEW]"
+      }
+    },
+    
+    "companion_tokens": {
+      "comment": "Only monitor these tokens when they appear WITH YU in the same transaction",
+      "tokens": ["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"],
+      "token_names": {
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": "USDC (only in YU pairs)"
+      }
+    }
+  },
+  
+  "filtering_strategy": {
+    "step1": "Check if slot contains YU token activity",
+    "step2": "If no YU token, skip the entire slot",
+    "step3": "If YU token present, check if it interacts with monitored programs",
+    "step4": "Only process transactions that involve YU token",
+    "benefits": [
+      "Reduces processing by ~99% (YU is not in every slot)",
+      "Eliminates false positives from unrelated USDC/DEX transactions",
+      "Focuses resources on actual YU token activity",
+      "Much faster sync speed by skipping irrelevant slots"
+    ]
+  }
+}

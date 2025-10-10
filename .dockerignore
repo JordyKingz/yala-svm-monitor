@@ -1,0 +1,48 @@
+# Git files
+.git
+.gitignore
+
+# Development files
+target/
+!Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# IDE files
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files (use .env.example instead)
+.env
+.env.*
+!.env.example
+
+# Data files
+slot_checkpoint.json
+tx_data/
+logs/
+*.log
+
+# Documentation
+*.md
+docs/
+!docs/README.md
+
+# Test files
+tests/
+benches/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Temporary files
+tmp/
+temp/

@@ -1,0 +1,73 @@
+[
+  {
+    "id": "yuya_mint_30m",
+    "name": "YU Token Mint >= 30M",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "TokenMint",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 30000000.0
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Store",
+        "collection": "critical_mints"
+      }
+    ],
+    "alerts": ["yuya_mint_telegram", "yuya_mint_slack"]
+  },
+  {
+    "id": "yuya_mint_10m",
+    "name": "YU Token Mint >= 10M",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "TokenMint",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 10000000.0
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Store",
+        "collection": "large_mints"
+      }
+    ],
+    "alerts": ["yuya_mint_telegram", "yuya_mint_slack"]
+  },
+  {
+    "id": "yuya_mint_1m",
+    "name": "YU Token Mint >= 1M",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "TokenMint",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 1000000.0
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Alert",
+        "severity": "Medium",
+        "channels": ["database"]
+      },
+      {
+        "type": "Store",
+        "collection": "medium_mints"
+      }
+    ],
+    "alerts": ["yuya_mint_telegram", "yuya_mint_slack"]
+  }
+]

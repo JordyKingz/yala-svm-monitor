@@ -1,0 +1,32 @@
+{
+  "performance": {
+    "max_concurrent_slots": 500,
+    "skip_empty_slots": true,
+    "batch_size": 1000,
+    "rpc_timeout_ms": 10000,
+    "enable_pre_filtering": true
+  },
+  "pre_filters": {
+    "comment": "Addresses extracted from monitor configurations - only process slots containing these programs/tokens",
+    "monitored_programs": [
+      "6doghB248px58JSSwG4qejQ46kFMW4AMj7vzJnWZHNZn",
+      "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8",
+      "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+      "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB"
+    ],
+    "monitored_programs_description": {
+      "6doghB248px58JSSwG4qejQ46kFMW4AMj7vzJnWZHNZn": "LayerZero Bridge",
+      "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8": "Raydium AMM V4",
+      "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4": "Jupiter V6",
+      "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB": "Jupiter V4"
+    },
+    "monitored_tokens": [
+      "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+      "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    ],
+    "monitored_tokens_description": {
+      "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu": "YU Token (YUYA)",
+      "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": "USDC"
+    }
+  }
+}

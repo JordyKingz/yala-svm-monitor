@@ -1,0 +1,96 @@
+version: '3.8'
+
+# Development Docker Compose configuration
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  solana-monitor:
+    # Build from source in development
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder  # Can stop at builder stage for debugging
+    
+    # Development environment
+    environment:
+      - NODE_ENV=development
+      - LOG_LEVEL=debug
+      - RUST_LOG=debug
+      - RUST_BACKTRACE=1
+      - ENABLE_COLORED_OUTPUT=true
+      - DEBUG=true
+      - VERBOSE=true
+    
+    # Mount source code for hot reload (if implemented)
+    volumes:
+      - ./src:/app/src:ro
+      - ./Cargo.toml:/app/Cargo.toml:ro
+      - ./config:/app/config
+      - ./slot_checkpoint.json:/app/slot_checkpoint.json
+      - ./tx_data:/app/tx_data
+      - ./logs:/app/logs
+      # Cargo cache for faster rebuilds
+      - cargo-cache:/usr/local/cargo/registry
+      - target-cache:/app/target
+    
+    # Interactive mode for debugging
+    stdin_open: true
+    tty: true
+    
+    # Disable restart in development
+    restart: "no"
+    
+    # More verbose logging in development
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+        labels: "env=dev"
+    
+    # Development command with verbose output
+    # command: ["-vv"]
+
+  # Development database for testing
+  postgres:
+    image: postgres:15-alpine
+    container_name: solana-monitor-db
+    environment:
+      POSTGRES_USER: monitor
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: solana_monitor
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    profiles:
+      - db
+
+  # Redis for caching in development
+  redis:
+    image: redis:7-alpine
+    container_name: solana-monitor-cache
+    ports:
+      - "127.0.0.1:6379:6379"
+    profiles:
+      - cache
+
+  # Adminer for database management
+  adminer:
+    image: adminer:latest
+    container_name: solana-monitor-adminer
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    profiles:
+      - db
+
+# Development volumes
+volumes:
+  cargo-cache:
+    driver: local
+  target-cache:
+    driver: local
+  postgres-data:
+    driver: local

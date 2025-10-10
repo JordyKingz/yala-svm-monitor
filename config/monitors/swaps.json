@@ -1,0 +1,115 @@
+[
+  {
+    "_comment": "Raydium programs: 675kPX9... (AMM V4), routeUGW... (Router), CAMMC... (CPMM)",
+    "id": "yu_raydium_all_swaps",
+    "name": "All YU Raydium Swaps",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "TokenTransfer",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 1000000.0
+        }
+      ],
+      "any_of": [
+        {
+          "type": "ProgramInvoked",
+          "program_id": "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8"
+        },
+        {
+          "type": "ProgramInvoked",
+          "program_id": "routeUGWgWzqBWFcrCfv8tritsqukccJPu3q5GPP3xS"
+        },
+        {
+          "type": "ProgramInvoked",
+          "program_id": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Store",
+        "collection": "raydium_yu_swaps"
+      }
+    ],
+    "alerts": ["yuya_raydium_swap_telegram", "yuya_raydium_swap_slack"]
+  },
+  {
+    "id": "yu_jupiter_v6_large_swap",
+    "name": "Large YU Jupiter V6 Swaps",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "ProgramInvoked",
+          "program_id": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"
+        },
+        {
+          "type": "TokenTransfer",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 1000000.0
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Store",
+        "collection": "large_jupiter_yu_swaps"
+      }
+    ],
+    "alerts": ["yuya_jupiter_swap_telegram", "yuya_jup_swap_slack"]
+  },
+  {
+    "id": "yu_usdc_pair_swap",
+    "name": "YU-USDC Pair Swaps",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "TokenTransfer",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 500000.0
+        },
+        {
+          "type": "TokenTransfer",
+          "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "operator": "GreaterThanOrEqual",
+          "amount": 500000.0
+        }
+      ],
+      "any_of": [
+        {
+          "type": "ProgramInvoked",
+          "program_id": "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8"
+        },
+        {
+          "type": "ProgramInvoked",
+          "program_id": "routeUGWgWzqBWFcrCfv8tritsqukccJPu3q5GPP3xS"
+        },
+        {
+          "type": "ProgramInvoked",
+          "program_id": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK"
+        },
+        {
+          "type": "ProgramInvoked",
+          "program_id": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"
+        },
+        {
+          "type": "ProgramInvoked",
+          "program_id": "JUP4Fb2cqiRUcaTHdrPC8h2gNsA2ETXiPDD33WcGuJB"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Store",
+        "collection": "yu_usdc_pair_swaps"
+      }
+    ],
+    "alerts": ["yu_usdc_pair_telegram", "yuya_swap_slack"]
+  }
+]

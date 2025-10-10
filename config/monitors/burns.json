@@ -1,0 +1,51 @@
+[
+  {
+    "id": "yuya_burn_10m",
+    "name": "YU Token Burn >= 10M",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "TokenBurn",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 10000000.0
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Store",
+        "collection": "large_burns"
+      }
+    ],
+    "alerts": ["yuya_burn_telegram", "yuya_burn_discord", "yuya_burn_slack"]
+  },
+  {
+    "id": "yuya_burn_1m",
+    "name": "YU Token Burn >= 1M",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "TokenBurn",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 1000000.0
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Alert",
+        "severity": "High",
+        "channels": ["database"]
+      },
+      {
+        "type": "Store",
+        "collection": "medium_burns"
+      }
+    ],
+    "alerts": ["yuya_burn_telegram", "yuya_burn_slack"]
+  }
+]

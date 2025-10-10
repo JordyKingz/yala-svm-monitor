@@ -1,0 +1,62 @@
+{
+  "yuya_mint_slack": {
+    "name": "YU Mint Slack Alert",
+    "trigger_type": "slack",
+    "config": {
+      "message": {
+        "title": "🚨 YU Token Mint Alert [Solana-Monitor]",
+        "body": "Large YU Mint Detected!\n\nAmount Minted: ${token_balance_changes.0.change} YU\nTransaction: ${signature}\nSlot: ${slot}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_burn_slack": {
+    "name": "YU Burn Slack Alert",
+    "trigger_type": "slack",
+    "config": {
+      "message": {
+        "title": "🔥 YU Token Burn Alert [Solana-Monitor]",
+        "body": "YU Tokens Burned!\n\nAmount Burned: ${token_balance_changes.0.change} YU\nTransaction: ${signature}\nSlot: ${slot}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_raydium_swap_slack": {
+    "name": "YU Swap Slack Alert",
+    "trigger_type": "slack",
+    "config": {
+      "message": {
+        "title": "💱 Large YU Swap Alert [RAYDIUM] [Solana-Monitor]",
+        "body": "High Value YU Swap\n\nAmount: ${token_balance_changes.0.change} YU\nPrograms: ${instructions.0.program_id}\nTransaction: ${signature}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_jup_swap_slack": {
+    "name": "YU Swap Slack Alert",
+    "trigger_type": "slack",
+    "config": {
+      "message": {
+        "title": "💱 Large YU Swap Alert [JUPITER] [Solana-Monitor]",
+        "body": "High Value YU Swap\n\nAmount: ${token_balance_changes.0.change} YU\nPrograms: ${instructions.0.program_id}\nTransaction: ${signature}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_swap_slack": {
+    "name": "YU Swap Slack Alert",
+    "trigger_type": "slack",
+    "config": {
+      "message": {
+        "title": "💱 Large YU Swap Alert [Solana-Monitor]",
+        "body": "High Value YU Swap\n\nAmount: ${token_balance_changes.0.change} YU\nPrograms: ${instructions.0.program_id}\nTransaction: ${signature}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yu_layerzero_bridge_slack": {
+    "name": "YU LayerZero Bridge Slack Alert",
+    "trigger_type": "slack",
+    "config": {
+      "message": {
+        "title": "🌉 YU LayerZero Bridge Alert [Solana-Monitor]",
+        "body": "Cross-chain Bridge Detected!\n\nAmount: ${token_balance_changes.0.change} YU\nBridge: LayerZero\nTransaction: ${signature}\nSlot: ${slot}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  }
+}

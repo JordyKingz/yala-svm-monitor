@@ -1,0 +1,135 @@
+services:
+  solana-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: solana-monitor:latest
+    container_name: solana-monitor
+    
+    # Environment configuration
+    env_file:
+      - .env
+    
+    # Additional environment variables (override .env if needed)
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - RUST_LOG=${RUST_LOG:-info}
+    
+    # Volume mounts
+    volumes:
+      # Configuration directory (read-only for safety)
+      - ./config:/app/config:ro
+      # Checkpoint file persistence
+      - ./slot_checkpoint.json:/app/slot_checkpoint.json
+      # Transaction data storage
+      - ./tx_data:/app/tx_data
+      # Logs directory
+      - ./logs:/app/logs
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+    
+    # Network mode (use host for better performance if needed)
+    # network_mode: host
+    
+    # Command override examples (uncomment one):
+    # command: monitor "123456789,123456790"  # Monitor specific slots
+    # command: --help                          # Show help
+    # command: generate-config filters.json    # Generate config
+
+  # Optional: Telegram notification test service
+  telegram-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: solana-monitor:latest
+    container_name: telegram-test
+    env_file:
+      - .env
+    command: telegram-setup
+    profiles:
+      - tools
+
+  # Grafana for monitoring dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: solana-monitor-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # Admin credentials
+      - GF_SECURITY_ADMIN_USER=grafana
+      - GF_SECURITY_ADMIN_PASSWORD=xK9mN3pQ7zL4wR6s
+      # Basic configuration
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+      # Anonymous access (read-only)
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      # Disable telemetry
+      - GF_ANALYTICS_REPORTING_ENABLED=false
+      - GF_ANALYTICS_CHECK_FOR_UPDATES=false
+    volumes:
+      # Grafana data persistence
+      - grafana-data:/var/lib/grafana
+      # Custom dashboards
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    profiles:
+      - monitoring
+
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: solana-monitor-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    profiles:
+      - monitoring
+
+# Named volumes (alternative to bind mounts)
+volumes:
+  monitor-config:
+    driver: local
+  monitor-data:
+    driver: local
+  monitor-checkpoint:
+    driver: local
+  grafana-data:
+    driver: local
+  prometheus-data:
+    driver: local
+
+# Networks (optional custom network)
+networks:
+  default:
+    name: solana-monitor-network
+    driver: bridge

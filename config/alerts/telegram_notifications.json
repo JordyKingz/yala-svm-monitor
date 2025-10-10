@@ -1,0 +1,92 @@
+{
+  "yuya_mint_telegram": {
+    "name": "YU Mint Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "🚨 YU Token Mint Alert [Solana-Monitor]",
+        "body": "Large YU Mint Detected!\n\nAmount Minted: ${token_balance_changes.0.change} YU\nTransaction: ${signature}\nSlot: ${slot}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_burn_telegram": {
+    "name": "YU Burn Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "🔥 YU Token Burn Alert [Solana-Monitor]",
+        "body": "YU Tokens Burned!\n\nAmount Burned: ${token_balance_changes.0.change} YU\nTransaction: ${signature}\nSlot: ${slot}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_swap_telegram": {
+    "name": "YU Swap Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "💱 Large YU Swap Alert [Solana-Monitor]",
+        "body": "High Value YU Swap\n\nAmount: ${token_balance_changes.0.change} YU\nPrograms: ${instructions.0.program_id}\nTransaction: ${signature}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_raydium_swap_telegram": {
+    "name": "YU Raydium Swap Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "🌊 YU Raydium Swap Detected [Solana-Monitor]",
+        "body": "Raydium DEX Swap\n\nAmount: ${token_balance_changes.0.change} YU\nPool: Raydium V4\nTransaction: ${signature}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_jupiter_swap_telegram": {
+    "name": "YU Jupiter Swap Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "🚀 YU Jupiter Swap Detected [Solana-Monitor]",
+        "body": "Jupiter Aggregator Swap\n\nAmount: ${token_balance_changes.0.change} YU\nRoute: Jupiter V6\nTransaction: ${signature}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yuya_orca_swap_telegram": {
+    "name": "YU Orca Swap Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "🐋 YU Orca Swap Detected [Solana-Monitor]",
+        "body": "Orca Whirlpool Swap\n\nAmount: ${token_balance_changes.0.change} YU\nPool: Orca Whirlpool\nTransaction: ${signature}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yu_usdc_pair_telegram": {
+    "name": "YU-USDC Pair Swap Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "💵 YU-USDC Swap Detected [Solana-Monitor]",
+        "body": "YU-USDC Trading Pair\n\nYU Amount: ${token_balance_changes.0.change}\nUSDC Amount: ${token_balance_changes.1.change}\nTransaction: ${signature}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yu_layerzero_bridge_telegram": {
+    "name": "YU LayerZero Bridge Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "🌉 YU LayerZero Bridge Alert [Solana-Monitor]",
+        "body": "Cross-chain Bridge Detected!\n\nAmount: ${token_balance_changes.0.change} YU\nBridge: LayerZero\nTransaction: ${signature}\nSlot: ${slot}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  },
+  "yu_wormhole_bridge_telegram": {
+    "name": "YU Wormhole Bridge Telegram Alert",
+    "trigger_type": "telegram",
+    "config": {
+      "message": {
+        "title": "🌌 YU Wormhole Bridge Alert [Solana-Monitor]",
+        "body": "Wormhole Bridge Activity!\n\nAmount: ${token_balance_changes.0.change} YU\nBridge: Wormhole/Portal\nTransaction: ${signature}\nSlot: ${slot}\n\nView on Solscan: https://solscan.io/tx/${signature}"
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+version: '3.8'
+
+# Production Docker Compose configuration
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+services:
+  solana-monitor:
+    # Use specific version tag in production
+    image: solana-monitor:${VERSION:-latest}
+    
+    # Production environment
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+      - RUST_LOG=info,monitor_with_filters=debug
+      - ENABLE_COLORED_OUTPUT=false
+      - ENABLE_STRUCTURED_LOGGING=true
+    
+    # Health check with tighter intervals for production
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "monitor_with_filters"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    
+    # Always restart in production
+    restart: always
+    
+    # Production logging with more retention
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
+        labels: "service=solana-monitor"
+        env: "NODE_ENV,LOG_LEVEL"
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    
+    # Production resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+        reservations:
+          cpus: '2.0'
+          memory: 2G
+      
+      # Swarm mode configuration (if using Docker Swarm)
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        monitor: 30s
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  # Optional: Prometheus metrics exporter
+  prometheus-exporter:
+    image: prom/node-exporter:latest
+    container_name: solana-monitor-metrics
+    restart: always
+    ports:
+      - "127.0.0.1:9100:9100"
+    command:
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    profiles:
+      - monitoring
+
+# Production volumes with backup labels
+volumes:
+  monitor-config:
+    driver: local
+    labels:
+      backup: "daily"
+      
+  monitor-data:
+    driver: local
+    labels:
+      backup: "hourly"
+      
+  monitor-checkpoint:
+    driver: local
+    labels:
+      backup: "hourly"
+      critical: "true"
+
+# Production network with encryption
+networks:
+  default:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    attachable: true

@@ -1,0 +1,54 @@
+[
+  {
+    "id": "yu_layerzero_large_bridge",
+    "name": "Large YU LayerZero Bridge [OLD]",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "ProgramInvoked",
+          "program_id": "6doghB248px58JSSwG4qejQ46kFMW4AMj7vzJnWZHNZn"
+        },
+        {
+          "type": "TokenTransfer",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 1000000.0
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Store",
+        "collection": "large_layerzero_bridges"
+      }
+    ],
+    "alerts": ["yu_layerzero_bridge_telegram", "yu_layerzero_bridge_discord", "yu_layerzero_bridge_slack"]
+  },
+  {
+    "id": "yu_layerzero_large_bridge_new",
+    "name": "Large YU LayerZero Bridge [NEW]",
+    "enabled": true,
+    "conditions": {
+      "all_of": [
+        {
+          "type": "ProgramInvoked",
+          "program_id": "3fCoNdCEoEcERakCPM17NjLE9AocA86LMwRRWDpzjLVh"
+        },
+        {
+          "type": "TokenTransfer",
+          "mint": "YUYAiJo8KVbnc6Fb6h3MnH2VGND4uGWDH4iLnw7DLEu",
+          "operator": "GreaterThanOrEqual",
+          "amount": 1000000.0
+        }
+      ]
+    },
+    "actions": [
+      {
+        "type": "Store",
+        "collection": "large_layerzero_bridges"
+      }
+    ],
+    "alerts": ["yu_layerzero_bridge_telegram", "yu_layerzero_bridge_slack"]
+  }
+]
